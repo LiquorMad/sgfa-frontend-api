@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/auth"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/auth", "components/Modal.oldtsx"],
   "exclude": ["node_modules"]
 }

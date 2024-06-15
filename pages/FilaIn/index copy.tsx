@@ -4,23 +4,8 @@ import React from 'react';
 import { parseCookies } from 'nookies';
 import api from '@/lib/axios';
 import { GetServerSideProps } from 'next';
-import { DataTable } from './data-table';
-import { FilaIn, columns } from './columns';
-import { Veiculo } from '../Veiculo';
-import { Rota } from '../Rota';
-import { Eye, FileEdit, Trash2 } from 'lucide-react';
 
-
-
-type FilaInProps = {
-  veiculos: Veiculo[],
-  rotas: Rota[],
-  current_rota_nome: string,
-  filas:FilaIn[]
-}
-
-
-const index = ({ veiculos,rotas,current_rota_nome,filas }:FilaInProps) => {
+const index = ({ veiculos,rotas,current_rota_nome,fila }:any) => {
   return (
     <AppLayout
       header={
@@ -28,9 +13,6 @@ const index = ({ veiculos,rotas,current_rota_nome,filas }:FilaInProps) => {
               Fila de Entrada
           </b>
       }>
-        <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={filas} />
-    </div>
       <div>
         <ul>
         <b>Rota atual</b>
@@ -56,10 +38,28 @@ const index = ({ veiculos,rotas,current_rota_nome,filas }:FilaInProps) => {
             <b>Rota is not an array</b>
           )}
         </ul>
+        <ul>
+        <b>Fila</b>
+          {Array.isArray(fila) ? (
+            fila.map((item: any) => (
+              <>
+                  <li key={item.id}>Matricula: {item.matricula}</li>
+                  <li key={item.id}>Data: {item.created_at}</li>
+              </>
+
+            ))
+          ) : (
+            <li>Fila de entrada is not an array</li>
+          )}
+        </ul>
       </div>
-    </AppLayout>  
+    </AppLayout>
+
+    
   );
 };
+
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     // Fetch data from an API
@@ -77,11 +77,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     });
     const { data } = response.data;
-    console.log(response.data.fila)
+    console.log(response.data.rotas)
 
     return {
       props: {
-        filas: response.data.fila,
+        fila: response.data.fila,
         rotas: response.data.rotas,
         veiculos: response.data.veiculos,
         current_rota_nome: response.data.current_rota_nome,

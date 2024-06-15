@@ -29,7 +29,6 @@ export interface User {
 
 export const useAuth = ({ middleware, redirectIfAuthenticated }: IUseAuth) => {
     const router = useRouter()
-
     
     const { data: user, error, mutate } = useSWR<User>('/api/user', () =>
         axios

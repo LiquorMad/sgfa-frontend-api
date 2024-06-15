@@ -41,9 +41,6 @@ const Login = () => {
 
   const { 
     handleSubmit, 
-    formState: { isSubmitting }, 
-    watch,
-    control,
   } = createLoginForm;
 
     const { query } = useRouter()
@@ -62,14 +59,6 @@ const Login = () => {
     })
     const { signIn } = useContext(AuthContext)
 
-    function submitForm(data: any){
-       const  email = data.email
-       const password = data.password
-        signIn({
-            email,
-            password,
-        })
-    }
     async function handleSignIn(data:any){
             await signIn(data)
     }

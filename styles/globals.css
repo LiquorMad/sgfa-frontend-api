@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*{
+  font-family: system-ui;
+  font-style: normal;
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,14 +19,48 @@
   }
 }
 
+/*Sidebar*/
+
+li{
+  font-size: 1.25rem;
+}
+.item-menu{
+  width: 230px;
+}
+.space-bordered{
+  height: 64px;
+  border-bottom: 1px solid rgb(255, 255, 255,.1);
+  transition: .4s;
+}
+
+.space_menu{
+  height: 28px;
+}
+
+
+/*Footer*/
+
+.footer{
+  color: #8A9199;
+  font-weight: bold;
+}
+/* END */
+
+
+.active{
+  box-shadow: 5px 5px  5px #f4f6f9;
+  /*background: #f4f6f9;*/
+}
+.sideOpen{
+  width: 230px
+}
+
+
 body {
+  margin: 0 auto;
+  padding: 0 auto;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  
 }
 
 @layer utilities {

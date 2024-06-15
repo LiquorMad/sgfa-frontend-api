@@ -32,11 +32,13 @@ export function AuthProvider({ children }:any){
     useEffect(() => {
         const { 'sgfa.token': token } = parseCookies()
         if(token){
-            recoverUserInformation().then(response => {
-                setUser(response.user)
+            recoverUserInformation(token).then(response => {
+                setUser(response)
             })
         }
     },[])
+    
+   
     async function signIn({email,password}:SignInData){
         const {token, user} = await signInRequest({
             email,

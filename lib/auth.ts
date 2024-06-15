@@ -1,5 +1,4 @@
 import api, { csrf }  from '@/lib/axios';
-import axios from "axios"
 
 import Router from 'next/router';
 import { destroyCookie } from "nookies";
@@ -21,46 +20,33 @@ export const signInRequest = async (args: SignInRequestData) => {
 
 export async function signOutRequest(token: string) {
     try {
-    const endpoint = 'http://127.0.0.1:8000/api/logout'
-    const response = await api.get(endpoint);
-    
-    console.log(response.status)
+        const endpoint = 'http://localhost:8000/api/logout'
+        
+        const response = await api.post('api/logout',{
+            headers:{
+            },
+        });
     if(response.status === 200){
         destroyCookie(undefined, 'sgfa.token')
         Router.push('/');
     }
-        
     } catch (error) {
         // Handle error
         throw error;
     }
 }
-/*
 
-export async function recoverUserInformation() {
-    const baseURL = 'api/user';    
+export async function recoverUserInformation(token: string) {
+    const baseURL = 'api/recoveryUserInformation';
     try {
-        const response = await api.get(baseURL);
+        const response = await api.get(baseURL,{
+            headers: {
+              Authorization: 'Bearer '+token
+            }
+          });
         return response.data;
     } catch (error) {
         // Handle error
         throw error;
     }
 }
-
-
-export async function signInRequest_old({email,password}: SignInRequestData){
-    const endpoint = '/api/login'
-    try {
-        const response = await api.post(endpoint, { email, password });
-        
-        return {
-            user: response.data.data,
-            token: response.data.acces_token
-        };
-    } catch (error) {
-        // Handle error
-        throw error;
-    }
-}
-*/
