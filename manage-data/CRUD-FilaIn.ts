@@ -16,6 +16,7 @@ export async function CreateFilaIn(players: z.infer<typeof formSchemaRegisterFil
     const response = await fetch(endpoint, options)
     return response;
 }
+
 export async function DeleteFilaIn(id:number){
     const endpoint = (`${baseUrlFilaIn}/${id}`)
     const options = {

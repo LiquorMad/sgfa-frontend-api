@@ -8,58 +8,32 @@ import { DataTable } from './data-table';
 import { FilaIn, columns } from './columns';
 import { Veiculo } from '../Veiculo';
 import { Rota } from '../Rota';
-import { Eye, FileEdit, Trash2 } from 'lucide-react';
-
-
 
 type FilaInProps = {
-  veiculos: Veiculo[],
+  veiculosRegister: Veiculo[],
+  veiculosTurn: Veiculo[],
   rotas: Rota[],
   current_rota_nome: string,
   filas:FilaIn[]
 }
 
+const  index = ({ veiculosRegister,veiculosTurn,rotas,current_rota_nome,filas }:FilaInProps) => {
 
-const index = ({ veiculos,rotas,current_rota_nome,filas }:FilaInProps) => {
   return (
     <AppLayout
       header={
           <b className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-              Fila de Entrada
+            {current_rota_nome}
           </b>
       }>
         <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={filas} />
+        <DataTable columns={columns} data={filas} veiculosRegister={veiculosRegister} veiculosTurn={veiculosTurn} rotas={rotas}/>
     </div>
-      <div>
-        <ul>
-        <b>Rota atual</b>
-          <li>{current_rota_nome}</li>
-        </ul>
-        <ul>
-          <b>Veiculos</b>
-          {Array.isArray(veiculos) ? (
-            veiculos.map((item: any) => (
-              <li key={item.id}>Veiculos: {item.matricula}</li>
-            ))
-          ) : (
-            <li>Veiculo is not an array</li>
-          )}
-        </ul>
-        <ul>
-        <b>Rotas:</b>
-          {Array.isArray(rotas) ? (
-            rotas.map((item: any) => (
-              <li key={item.id}>{item.nome}</li>
-            ))
-          ) : (
-            <b>Rota is not an array</b>
-          )}
-        </ul>
-      </div>
+      
     </AppLayout>  
   );
 };
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     // Fetch data from an API
@@ -76,16 +50,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         Authorization: 'Bearer '+token
       }
     });
-    const { data } = response.data;
-    console.log(response.data.fila)
-
+    console.log(response.data);
     return {
       props: {
         filas: response.data.fila,
         rotas: response.data.rotas,
-        veiculos: response.data.veiculos,
+        veiculosRegister: response.data.veiculosRegister,
+        veiculosTurn: response.data.veiculosTurn,
         current_rota_nome: response.data.current_rota_nome,
       }
+      
     };
   } catch (error) {
     // Handle error

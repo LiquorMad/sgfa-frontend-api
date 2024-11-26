@@ -31,7 +31,7 @@ const AppLayout = ({ header, children }: PropsWithChildren<Props>) => {
                 </div>
                 <div className="w-full">
                     {/* Page Heading */}
-                    <header className=" w-full bg-white border-bborder-gray-200 shadow md:flex 
+                    <header className="sticky z-10 w-full bg-white border-bborder-gray-200 shadow md:flex 
                         md:items-center h-16 dark:bg-gray-800 dark:border-gray-600">
                     <div className='flex p-2'>
                         <FaBars 
@@ -81,7 +81,7 @@ const AppLayout = ({ header, children }: PropsWithChildren<Props>) => {
                     </header>
                     <div> {header} </div>
                     {/* Page Content */}
-                    <div>{children}</div>
+                    <div className='mt-10 mb-10'>{children}</div>
                     <footer className="footer fixed bottom-0 w-full bg-white border-t
                         hadow md:flex md:items-center md:justify-between md:p-6 
                         ">Copyright &copy; {year} Leonildo Moniz  </footer>    

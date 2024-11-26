@@ -1,8 +1,8 @@
 import { Zona } from "../Zona"
 
 export type Rota = {
-    id: number,
-    zona: string,
+    id: string,
+    nome: string,
     cor: string,
     tipo: string,
   }

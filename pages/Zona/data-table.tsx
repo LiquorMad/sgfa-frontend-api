@@ -22,7 +22,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { FilaInForm } from "./form-register"
+import { ZonaForm } from "./form-register"
 
 import {
   Table,
@@ -33,42 +33,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
- 
 import { Trash2 } from 'lucide-react';
-import { Veiculo } from "../Veiculo"
-import { Rota } from "../Rota"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import MyTurnComponent from "./MyTurnComponent"
+import { Concelho } from "../Concelho"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  veiculosRegister: Veiculo[],
-  veiculosTurn: Veiculo[],
-  rotas: Rota[]
+  concelho: Concelho[],
 }
+
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  veiculosRegister,
-  veiculosTurn,
-  rotas,
+  concelho,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -89,22 +68,9 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   })
-  const [selectedMatricula, setSelectedMatricula] = React.useState<string>('');
-  const [showMyTurnInfo, setShowMyTurnInfo] = React.useState<boolean>(false);
-
-  const handleRowClick = (matricula: string) => {
-    setSelectedMatricula(matricula);
-    setShowMyTurnInfo(true);
-    //setTimeout(handleOnclose, 4000);
-  };
-
-  const handleOnclose = () => {
-    setShowMyTurnInfo(false)
-  }
+ 
   return (
     <div>
-        {showMyTurnInfo && 
-        <MyTurnComponent matricula={selectedMatricula} onClose={handleOnclose}/>}
       <div className="flex items-center py-4 w-3/4 m-0 m-auto relative ">
         <div className="left-side-buttons absolute right-0 pb-4">
           <Sheet>
@@ -113,73 +79,15 @@ export function DataTable<TData, TValue>({
             </SheetTrigger>
             <SheetContent className="bg-white">
               <SheetHeader>
-                <SheetTitle>Registar Veiculo na Fila</SheetTitle>
+                <SheetTitle>Registar novo Veiculo</SheetTitle>
                 <SheetDescription>
-                  Regista novo veiculo na Fila.
+                  Regista novo veiculo.
                 </SheetDescription>
               </SheetHeader>
-                  <FilaInForm veiculosRegister={veiculosRegister} rotas={rotas} />
+                  <ZonaForm concelhos={concelho} />
             </SheetContent>
           </Sheet>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="primary" > Minha Vez </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white">
-              <DropdownMenuLabel> Veiculos </DropdownMenuLabel>
-              <ScrollArea className=" max-h-[250px] rounded-md border p-4">
-                <Command className="max-h-[200px] rounded-lg border shadow-md">
-                  <CommandInput placeholder="Procura ..." />
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup >
-                      {Array.isArray(veiculosTurn) ? (
-                      veiculosTurn.map((item: any) => (
-                        <CommandItem>
-                          <Button onClick={() => handleRowClick(item.matricula)}>
-                            {item.matricula}
-                          </Button>
-                        </CommandItem>
-                      ))
-                      ):(
-                        <CommandItem>Veiculos is not an array</CommandItem>
-                      )}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </ScrollArea>
-            </DropdownMenuContent>
-          </DropdownMenu>
           
-          <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="primary"> Mudar Rota </Button>
-          </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white">
-              <DropdownMenuLabel> Rotas </DropdownMenuLabel>
-              <ScrollArea className="max-h-[300px]  rounded-md border p-4">
-                <Command className="rounded-lg border shadow-md">
-                  <CommandInput placeholder="Procura ..." />
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup>
-                      {Array.isArray(rotas) ? (
-                      rotas.map((item: any) => (
-                        <CommandItem>
-                          <Button>
-                            {item.nome}
-                          </Button>
-                          </CommandItem>
-                      ))
-                      ):(
-                        <CommandItem>Rotas is not an array</CommandItem>
-                      )}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </ScrollArea>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
       <div className="rounded-md border w-3/4 m-auto">
@@ -212,8 +120,27 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
+                    {cell.column.id === "cor" ? (
+                        cell.getValue() ? (
+                            // Renderiza o retângulo colorido se houver valor para a cor
+                            <div
+                                style={{
+                                    backgroundColor: cell.getValue(), // Define a cor de fundo
+                                    width: "30px",                    // Largura do retângulo
+                                    height: "20px",                   // Altura do retângulo
+                                    borderRadius: "4px",              // Borda arredondada opcional
+                                    display: "inline-block"           // Alinha o retângulo com o texto
+                                }}
+                            ></div>
+                        ) : (
+                            // Exibe "Sem cor" se o valor da cor estiver indefinido ou vazio
+                            <span>Sem cor</span>
+                        )
+                    ) : (
+                        flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                </TableCell>
+                
                   ))}
                   <TableCell>
                     <div className='flex'>

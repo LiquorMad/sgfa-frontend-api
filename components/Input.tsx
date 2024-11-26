@@ -11,7 +11,7 @@ export function Input(props: InputProps) {
   return (
     <input 
       id={props.name}
-      className="flex-1 rounded border border-zinc-300 shadow-sm px-3 py-2 text-zinc-800 focus:outline-none focus:ring-2 focus:ring-violet-500"
+      className="flex w-full rounded border border-zinc-300 shadow-sm px-3 py-2 text-zinc-800 focus:outline-none focus:ring-2 focus:primary_color"
       {...register(props.name)} 
       {...props}
     />

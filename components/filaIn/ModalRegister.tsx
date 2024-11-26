@@ -62,73 +62,7 @@ export function ModalRegister({ visible, onClose,rotas,veiculos }:FilaInProps) {
   }
 return (
   <Modal visible={visible} onClose={onClose}>
-    <ScrollArea className="h-[400px] w-[450px] rounded-md border p-4">
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
-        <FormField
-          control={form.control}
-          name="idRota"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Rota</FormLabel>
-              <FormControl>
-              <Select onValueChange={field.onChange} >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Escolhe o Player 1" />
-                </SelectTrigger>
-                <SelectContent>
-                <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
-                  {rotas.map((rota:any) =>(
-                    <SelectItem  
-                      value={rota.id.toString()} 
-                      key={rota.id}>{rota.nome}
-                    </SelectItem>
-                  ))}
-                </ScrollArea>
-                </SelectContent>
-              </Select>
-              </FormControl>
-              <FormDescription>
-                This is your public display apelido.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="idVeiculo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Veiculo</FormLabel>
-              <FormControl>
-              <Select onValueChange={field.onChange} >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Escolhe o Player 2" />
-                </SelectTrigger>
-                <SelectContent>
-                <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
-                  {veiculos.map((veiculo:any) =>(
-                    <SelectItem 
-                      value={veiculo.id.toString()} 
-                      key={veiculo.id}>{veiculo.matricula}
-                    </SelectItem>
-                  ))}
-                </ScrollArea>
-                </SelectContent>
-              </Select>
-              </FormControl>
-              <FormDescription>
-                This is your public display apelido.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" variant="outline">Submit</Button>
-      </form>
-    </Form>
-  </ScrollArea>
+    
   </Modal>
   )
 }

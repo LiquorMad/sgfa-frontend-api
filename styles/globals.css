@@ -62,7 +62,25 @@ body {
   color: rgb(var(--foreground-rgb));
   
 }
+.title-info-alert{
+  color: rgb(33,150,243);
+  font-weight: bold;
+}
+.matricula-info{
+  font-weight: bold;
 
+}
+.alert-info{
+  border-left: rgb(33,150,243) 5px solid;
+  box-shadow: 5px 5px 5px rgb(110, 108, 108);
+  border-radius: 10px;
+}
+.alert-info li{
+  font-size: 14px;
+}
+.list-info{
+  list-style-type: disc;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

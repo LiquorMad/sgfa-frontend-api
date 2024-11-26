@@ -3,6 +3,7 @@ import { setCookie, parseCookies } from 'nookies';
 import { recoverUserInformation, signInRequest } from "@/lib/auth";
 import { useRouter } from "next/router";
 import api from "@/lib/axios";
+import { Toaster } from "@/components/ui/toaster"
 
 type User = {
     name: string,
@@ -54,6 +55,7 @@ export function AuthProvider({ children }:any){
     return (
         <AuthContext.Provider value={{ user, isAuthenticated,signIn }}>
             {children}
+          <Toaster />
         </AuthContext.Provider>
     )
 }
